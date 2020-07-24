@@ -1,6 +1,6 @@
 ---
 - name: print konfigurasi
-  hosts: R1
+  hosts: R3
   connection: local
   gather_facts: false
 
@@ -17,7 +17,7 @@
         authorize: yes  #mendapat akses untukkmasuk ke global config
         parents: "int g0/1"  #masuk ke interface
         lines:
-          - ip add 12.12.12.2 255.255.255.0
+          - ip add 23.23.23.3 255.255.255.0
           - no sh
       register: intg01  #menyimpan hasil konfigurasi
     - debug:
@@ -29,7 +29,7 @@
         authorize: yes  #mendapat akses untukkmasuk ke global config
         parents: "int g0/2"  #masuk ke interface
         lines:
-          - ip add 23.23.23.1 255.255.255.0
+          - ip add 192.168.3.1 255.255.255.0
           - no sh
       register: intg02  #menyimpan hasil konfigurasi
     - debug:
@@ -43,7 +43,7 @@
         lines:
           - net 192.168.1.0
           - net 23.23.23.0
-          - net 12.12.12.0
+          - net 192.168.3.0
       register: routing  #menyimpan hasil konfigurasi
 
     - debug:

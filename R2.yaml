@@ -1,6 +1,6 @@
 ---
 - name: print konfigurasi
-  hosts: R1
+  hosts: R2
   connection: local
   gather_facts: false
 

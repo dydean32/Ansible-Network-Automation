@@ -1,0 +1,25 @@
+---
+- name: print konfigurasi
+  hosts: all
+  connection: local
+  gather_facts: false
+
+  vars:   #koneksi host ke dalam ansible
+    cli:
+      host: "{{inventory_hostname}}"
+      username: cisco
+      password: cisco
+
+  tasks:
+    - name: menampilkan seluruh konfigurasi
+      ios_command:
+        provider: "{{cli}}" #mengarahkan konfigurasi ke mana
+        commands:
+          - show runn
+          - show interfaces
+      register: showconfig  #menyimpan hasil konfigurasi
+
+    - debug: 
+        msg: "{{showconfig}}"
+
+

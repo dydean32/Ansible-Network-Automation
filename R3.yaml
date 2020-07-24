@@ -1,0 +1,52 @@
+---
+- name: print konfigurasi
+  hosts: R1
+  connection: local
+  gather_facts: false
+
+  vars:   #koneksi host ke dalam ansible
+    cli:
+      host: "{{inventory_hostname}}"
+      username: cisco
+      password: cisco
+
+  tasks:
+    - name: menambah ip g0/1
+      ios_config:
+        provider: "{{cli}}" #mengarahkan konfigurasi ke mana
+        authorize: yes  #mendapat akses untukkmasuk ke global config
+        parents: "int g0/1"  #masuk ke interface
+        lines:
+          - ip add 12.12.12.2 255.255.255.0
+          - no sh
+      register: intg01  #menyimpan hasil konfigurasi
+    - debug:
+        msg: "{{intg01}}" #di isi dengan variabel register
+
+    - name: menambah ip g0/2
+      ios_config:
+        provider: "{{cli}}" #mengarahkan konfigurasi ke mana
+        authorize: yes  #mendapat akses untukkmasuk ke global config
+        parents: "int g0/2"  #masuk ke interface
+        lines:
+          - ip add 23.23.23.1 255.255.255.0
+          - no sh
+      register: intg02  #menyimpan hasil konfigurasi
+    - debug:
+        msg: "{{intg02}}" #di isi dengan variabel register
+
+    - name: konfigurasi routing
+      ios_config:
+        provider: "{{cli}}" #mengarahkan konfigurasi ke mana
+        authorize: yes  #mendapat akses untukkmasuk ke global config
+        parents: "router eigrp 100"  #masuk ke interface
+        lines:
+          - net 192.168.1.0
+          - net 23.23.23.0
+          - net 12.12.12.0
+      register: routing  #menyimpan hasil konfigurasi
+
+    - debug:
+        msg: "{{routing}}" #di isi dengan variabel register
+
+

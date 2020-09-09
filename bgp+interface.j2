@@ -1,0 +1,15 @@
+!
+interface {{ INT_SATU }}
+ip address {{ INT_SATU_IP }} {{ INT_SATU_NETMASK }}
+no shut
+
+interface {{ INT_DUA }}
+ip address {{ INT_DUA_IP }} {{ INT_DUA_NETMASK }}
+no shut
+!
+router bgp {{ BGP_AS }}
+neighbor {{ IP_TETANGGA1 }} remote-as {{ BGP_AS }}
+neighbor {{ IP_TETANGGA2 }} remote-as {{ BGP_AS }}
+network {{ INT_SATU_NET }} mask {{ INT_SATU_NETMASK }}
+network {{ INT_DUA_NET }} mask {{ INT_DUA_NETMASK }}
+!

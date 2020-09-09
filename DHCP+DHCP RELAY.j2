@@ -1,0 +1,10 @@
+!
+ip dhcp pool server
+network {{ INT_HOST_NET }} {{ INT_HOST_NETMASK }}
+default-router {{ INT_HOST_IP }}
+!
+
+!
+interface {{ INT_SATU }}
+ip helper-address {{ IP_TETANGGA1 }}
+!  

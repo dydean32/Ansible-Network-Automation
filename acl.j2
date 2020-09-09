@@ -1,0 +1,6 @@
+!
+access-list 10 deny {{ INT_HOST1 }}
+access-list 10 permit any
+int {{ INT_SATU }}
+ip access-group 10 out
+!

@@ -1,0 +1,67 @@
+---
+- name: konfigurasi R1
+  hosts: R1
+  gather_facts: no
+  connection: local
+  become: yes
+
+  vars:
+    cli:
+      username: cisco
+      password: cisco
+
+  tasks:
+    - name : Routing BGP
+      ios_config:
+        src: ./bgp.j2
+        provider: "{{cli}}"
+
+
+    - name : ACL CONFIG
+      ios_config:
+        src: ./acl.j2
+        provider: "{{cli}}"
+
+- name: konfigurasi R2
+  hosts: R2
+  gather_facts: no
+  connection: local
+  become: yes
+
+  vars:
+    cli:
+      username: cisco
+      password: cisco
+
+  tasks:
+    - name: Routing BGP
+      ios_config:
+        src: ./bgp.j2
+        provider: "{{cli}}"
+
+    - name : DHCP SERVER
+      ios_config:
+        src: ./dhcpserver.j2
+        provider: "{{cli}}"
+
+- name: konfigurasi R3
+  hosts: R3
+  gather_facts: no
+  connection: local
+  become: yes
+
+  vars:
+    cli:
+      username: cisco
+      password: cisco
+
+  tasks:
+    - name: Routing BGP
+      ios_config:
+        src: ./bgp.j2
+        provider: "{{cli}}"
+
+    - name : dhcp relay
+      ios_config:
+        src: ./dhcprelay.j2
+        provider: "{{cli}}"
